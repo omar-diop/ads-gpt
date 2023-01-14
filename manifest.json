@@ -1,0 +1,17 @@
+{
+  "name": "Ads Copy Generator",
+  "description": "A Google Chrome extension!",
+  "version": "0.0.1",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "/src/popup.html",
+    "default_icon": {
+      "48": "/src/assets/icons/48.png",
+      "128": "/src/assets/icons/128.png"
+    }
+  },
+  "icons": {
+    "48": "/src/assets/icons/48.png",
+    "128": "/src/assets/icons/128.png"
+  }
+}

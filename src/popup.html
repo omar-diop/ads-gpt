@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="./styles/main.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div id="header">
+        <h1>Ads Copy Generator</h1>
+      </div>
+      <div class="content">
+        <div class="form">
+          <label for="text">Descrizione prodotto</label>
+          <textarea
+            name="text"
+            id="textarea"
+            placeholder="Inserisci una descrizione per il prodotto..."
+          ></textarea>
+        </div>
+        <div class="buttons">
+          <button class="button" id="reset-button">Reset</button>
+          <button class="button primary" id="submit-button">Submit!</button>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="./api/open-ai.js"></script>
+  </body>
+</html>
