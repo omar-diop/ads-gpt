@@ -1,5 +1,6 @@
 {
   "name": "Ads Copy Generator",
+  "author": "Omar Diop",
   "description": "A Google Chrome extension!",
   "version": "0.0.1",
   "manifest_version": 3,
