@@ -5,7 +5,7 @@
   </head>
   <body>
     <div class="wrapper">
-      <div id="header">
+      <div class="header">
         <h1>Ads Copy Generator</h1>
       </div>
       <div class="content">
@@ -19,16 +19,32 @@
         </div>
         <div class="buttons">
           <button class="button" id="reset-button">Reset</button>
-          <button class="button primary" id="submit-button">Submit!</button>
+          <button class="button primary" id="submit-button">Genera!</button>
         </div>
       </div>
       <div>
-        <h1>Headlines</h1>
-        <div>
+        <div class="headlines-loader">
+          <h1>Genero headlines...</h1>
+          <div class="skeleton skeleton-text"></div>
+          <div class="skeleton skeleton-text"></div>
+          <div class="skeleton skeleton-text"></div>
+          <div class="skeleton skeleton-text"></div>
+        </div>
+        <div class="headlines-result">
+          <h1>Headlines</h1>
           <p id="headlines"></p>
         </div>
-        <h1>Body Texts</h1>
-        <div>
+        <div class="bodies-loader">
+          <h1>Genero body text...</h1>
+          <div class="skeleton skeleton-text"></div>
+          <div class="skeleton skeleton-text"></div>
+          <div class="skeleton skeleton-text"></div>
+          <div class="skeleton skeleton-text"></div>
+          <div class="skeleton skeleton-text"></div>
+          <div class="skeleton skeleton-text"></div>
+        </div>
+        <div class="bodies-result">
+          <h1>Body Texts</h1>
           <p id="body-texts"></p>
         </div>
       </div>

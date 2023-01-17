@@ -4,6 +4,12 @@ document.addEventListener(
     if (!event.target.matches("#submit-button")) return
 
     event.preventDefault()
+    const headlinesLoader = document.querySelector(".headlines-loader")
+    const bodiesLoader = document.querySelector(".bodies-loader")
+    const headlinesResult = document.querySelector(".headlines-result")
+    const bodiesResult = document.querySelector(".bodies-result")
+    headlinesLoader.style.display = "block"
+    bodiesLoader.style.display = "block"
 
     const description = document.getElementById("textarea").value
     postData("https://api.openai.com/v1/completions", {
@@ -18,6 +24,8 @@ document.addEventListener(
       console.log(data)
       const element = document.querySelector("#headlines")
       element.innerText = data.choices[0].text
+      headlinesLoader.style.display = "none"
+      headlinesResult.style.display = "block"
     })
 
     postData("https://api.openai.com/v1/completions", {
@@ -30,8 +38,11 @@ document.addEventListener(
       presence_penalty: 0.0,
     }).then((data) => {
       console.log(data)
+
       const element = document.querySelector("#body-texts")
       element.innerText = data.choices[0].text
+      bodiesLoader.style.display = "none"
+      bodiesResult.style.display = "block"
     })
   },
   false
