@@ -102,8 +102,3 @@ textarea {
 .headlines-result {
   display: none;
 }
-
-#headlines,
-#body-texts {
-  margin-top: -20px;
-}

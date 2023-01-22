@@ -38,7 +38,7 @@ document.addEventListener(
 
       postData("https://api.openai.com/v1/completions", {
         model: "text-davinci-003",
-        prompt: `Trova cinque headlines con angle diversi per il seguente prodotto da sponsorizzare tramite Facebook Ads:\n\nProdotto:${description}. Il risultato dev'essere un'elenco puntato.`,
+        prompt: `Trova cinque headlines con angle diversi per il seguente prodotto da sponsorizzare tramite Facebook Ads:\n\nProdotto:${description}. Formatta il risultato in un elenco puntato.`,
         temperature: 0.7,
         max_tokens: 256,
         top_p: 1.0,
@@ -46,16 +46,18 @@ document.addEventListener(
         presence_penalty: 0.0,
       }).then((data) => {
         console.log(data)
-        session = { ...session, headlines: data.choices[0].text }
+        const output = cleanOutput(data.choices[0].text)
+        console.log(output)
+        session = { ...session, headlines: output }
         chrome.storage.session.set({
           savedStade: session,
         })
-        setHeadlines(data.choices[0].text)
+        setHeadlines(output)
       })
 
       postData("https://api.openai.com/v1/completions", {
         model: "text-davinci-003",
-        prompt: `Trova tre body text con angle diversi per il seguente prodotto da sponsorizzare tramite Facebook Ads:\n\nProdotto:${description}. Il risultato dev'essere un elenco puntato.`,
+        prompt: `Trova tre body text con angle diversi per il seguente prodotto da sponsorizzare tramite Facebook Ads:\n\nProdotto:${description}. Formatta il risultato in elenco puntato.`,
         temperature: 0.7,
         max_tokens: 1000,
         top_p: 1.0,
@@ -63,11 +65,13 @@ document.addEventListener(
         presence_penalty: 0.0,
       }).then((data) => {
         console.log(data)
-        session = { ...session, bodies: data.choices[0].text }
+        const output = cleanOutput(data.choices[0].text)
+        console.log(output)
+        session = { ...session, bodies: output }
         chrome.storage.session.set({
           savedStade: session,
         })
-        setBodies(data.choices[0].text)
+        setBodies(output)
       })
     } else if (event.target.matches("#reset-button")) {
       headlinesLoader.style.display = "none"
@@ -75,6 +79,13 @@ document.addEventListener(
       headlinesResult.style.display = "none"
       bodiesResult.style.display = "none"
       document.getElementById("textarea").value = ""
+      chrome.storage.session.set({
+        savedStade: {
+          productDescription: null,
+          headlines: null,
+          bodies: null,
+        },
+      })
     }
   },
   false
@@ -117,4 +128,8 @@ function setBodies(bodies) {
   bodiesDiv.innerText = bodies
   bodiesLoader.style.display = "none"
   bodiesResult.style.display = "block"
+}
+
+function cleanOutput(text) {
+  return text.trim()
 }
