@@ -4,6 +4,11 @@
   "description": "A Google Chrome extension!",
   "version": "0.0.1",
   "manifest_version": 3,
+  "background.service_worker": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "permissions": ["storage"],
   "action": {
     "default_popup": "/src/popup.html",
     "default_icon": {
