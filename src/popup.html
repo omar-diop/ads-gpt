@@ -14,7 +14,7 @@
       <div class="inner">
       <div class="content">
         <div class="form">
-          <p for="text" class="authDesc">In order to start generating texts you need an OpenAI API Key. <br><br>Don't know how to get one? <a class="link" href="https://beta.openai.com/account/api-keys">Get yours here!</a></p>
+          <p for="text" class="authDesc">In order to start generating copy you need an OpenAI API Key. <br><br>Don't know how to get one? <a class="link" href="https://beta.openai.com/account/api-keys">Get yours here!</a></p>
           <input
             name="apiKey"
             id="apiKey"
@@ -33,11 +33,13 @@
         <img class="logo" src="./assets/icons/128.png"/>
         <h1>Ads Copy Genius</h1>
       </div>
+      <button class="settingsButton" id="reset-button"><img class="settingsImage" src="./assets/icons/settings.png"/></button>
+      
       </div>
       <div class="inner">
       <div class="content">
         <div class="form">
-          <label for="text">Product/service description</label>
+          <label class="label" for="text">Product/service description</label>
           <textarea
             name="text"
             id="textarea"
