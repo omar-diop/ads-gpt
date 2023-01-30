@@ -1,7 +1,7 @@
 {
-  "name": "Ads Copy Generator",
+  "name": "Ads Copy Genius",
   "author": "Omar Diop",
-  "description": "A Google Chrome extension!",
+  "description": "Elevate your Facebook advertising game.",
   "version": "0.0.1",
   "manifest_version": 3,
   "background.service_worker": {

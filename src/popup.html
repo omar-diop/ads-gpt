@@ -4,27 +4,45 @@
     <link rel="stylesheet" href="./styles/main.css" />
   </head>
   <body>
-    <div class="wrapper">
+    <div class="wrapper" id="auth">
       <div class="header">
-        <h1>Ads Copy Generator</h1>
+        <h1>You need an API Key</h1>
       </div>
       <div class="content">
         <div class="form">
-          <label for="text">Descrizione prodotto/servizio</label>
+          <p for="text">In order to start generating your copy you need an OpenAI API Key. Don't know how to get one? <a>Start here!</a></p>
+          <input
+            name="apiKey"
+            id="apiKey"
+            placeholder="Insert your API Key here..."
+          ></input>
+        </div>
+        <div class="buttons">
+          <button class="button primary" id="submit-key-button">Submit</button>
+        </div>
+      </div>
+    </div>
+    <div class="wrapper" id="main">
+      <div class="header">
+        <h1>Ads Copy Genius</h1>
+      </div>
+      <div class="content">
+        <div class="form">
+          <label for="text">Product/service description</label>
           <textarea
             name="text"
             id="textarea"
-            placeholder="Inserisci una descrizione per il prodotto..."
+            placeholder="Insert your description here..."
           ></textarea>
         </div>
         <div class="buttons">
           <button class="button" id="reset-button">Reset</button>
-          <button class="button primary" id="submit-button">Genera!</button>
+          <button class="button primary" id="submit-button">Generate!</button>
         </div>
       </div>
       <div>
         <div class="headlines-loader">
-          <h1>Genero headlines...</h1>
+          <h1>Generating headlines...</h1>
           <div class="skeleton skeleton-text"></div>
           <div class="skeleton skeleton-text"></div>
           <div class="skeleton skeleton-text"></div>
@@ -35,7 +53,7 @@
           <p id="headlines"></p>
         </div>
         <div class="bodies-loader">
-          <h1>Genero body text...</h1>
+          <h1>Generating body texts...</h1>
           <div class="skeleton skeleton-text"></div>
           <div class="skeleton skeleton-text"></div>
           <div class="skeleton skeleton-text"></div>

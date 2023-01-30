@@ -6,6 +6,11 @@ body {
   padding: 0.5rem;
 }
 
+#main,
+#auth {
+  display: none;
+}
+
 h1 {
   font-size: 1.2rem;
   margin: 0;

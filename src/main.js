@@ -1,104 +1,129 @@
 document.addEventListener("DOMContentLoaded", () => {
-  chrome.storage.session.get("savedStade").then(({ savedStade }) => {
-    const { productDescription, headlines, bodies } = savedStade
+  const mainView = document.getElementById("main")
+  const authView = document.getElementById("auth")
 
-    console.log("Description: " + productDescription)
-    console.log("Headlines: " + headlines)
-    console.log("Bodies: " + bodies)
+  chrome.storage.local.get("apiKey").then(({ apiKey }) => {
+    if (apiKey) {
+      mainView.style.display = "block"
 
-    setDescription(productDescription)
-    setHeadlines(headlines)
-    setBodies(bodies)
+      chrome.storage.session.get("savedStade").then(({ savedStade }) => {
+        const { productDescription, headlines, bodies } = savedStade
+
+        console.log("Description: " + productDescription)
+        console.log("Headlines: " + headlines)
+        console.log("Bodies: " + bodies)
+
+        setDescription(productDescription)
+        setHeadlines(headlines)
+        setBodies(bodies)
+      })
+    } else {
+      authView.style.display = "block"
+      console.log("no auth")
+    }
   })
-})
 
-document.addEventListener(
-  "click",
-  function (event) {
-    event.preventDefault()
+  document.addEventListener(
+    "click",
+    function (event) {
+      event.preventDefault()
 
-    const headlinesResult = document.querySelector(".headlines-result")
-    const bodiesResult = document.querySelector(".bodies-result")
-    const headlinesLoader = document.querySelector(".headlines-loader")
-    const bodiesLoader = document.querySelector(".bodies-loader")
+      const headlinesResult = document.querySelector(".headlines-result")
+      const bodiesResult = document.querySelector(".bodies-result")
+      const headlinesLoader = document.querySelector(".headlines-loader")
+      const bodiesLoader = document.querySelector(".bodies-loader")
 
-    if (event.target.matches("#submit-button")) {
-      headlinesLoader.style.display = "block"
-      bodiesLoader.style.display = "block"
-      headlinesResult.style.display = "none"
-      bodiesResult.style.display = "none"
+      if (event.target.matches("#submit-button")) {
+        headlinesLoader.style.display = "block"
+        bodiesLoader.style.display = "block"
+        headlinesResult.style.display = "none"
+        bodiesResult.style.display = "none"
 
-      const description = document.getElementById("textarea").value
+        const description = document.getElementById("textarea").value
 
-      let session = {
-        productDescription: description,
-        headlines: null,
-        bodies: null,
-      }
-
-      postData("https://api.openai.com/v1/completions", {
-        model: "text-davinci-003",
-        prompt: `Trova cinque headlines con angle diversi per il seguente prodotto da sponsorizzare tramite Facebook Ads:\n\nProdotto:${description}. Formatta il risultato in un elenco puntato.`,
-        temperature: 0.7,
-        max_tokens: 256,
-        top_p: 1.0,
-        frequency_penalty: 0.0,
-        presence_penalty: 0.0,
-      }).then((data) => {
-        console.log(data)
-        const output = cleanOutput(data.choices[0].text)
-        console.log(output)
-        session = { ...session, headlines: output }
-        chrome.storage.session.set({
-          savedStade: session,
-        })
-        setHeadlines(output)
-      })
-
-      postData("https://api.openai.com/v1/completions", {
-        model: "text-davinci-003",
-        prompt: `Trova tre body text con angle diversi per il seguente prodotto da sponsorizzare tramite Facebook Ads:\n\nProdotto:${description}. Formatta il risultato in elenco puntato.`,
-        temperature: 0.7,
-        max_tokens: 1000,
-        top_p: 1.0,
-        frequency_penalty: 0.0,
-        presence_penalty: 0.0,
-      }).then((data) => {
-        console.log(data)
-        const output = cleanOutput(data.choices[0].text)
-        console.log(output)
-        session = { ...session, bodies: output }
-        chrome.storage.session.set({
-          savedStade: session,
-        })
-        setBodies(output)
-      })
-    } else if (event.target.matches("#reset-button")) {
-      headlinesLoader.style.display = "none"
-      bodiesLoader.style.display = "none"
-      headlinesResult.style.display = "none"
-      bodiesResult.style.display = "none"
-      document.getElementById("textarea").value = ""
-      chrome.storage.session.set({
-        savedStade: {
-          productDescription: null,
+        let session = {
+          productDescription: description,
           headlines: null,
           bodies: null,
-        },
-      })
-    }
-  },
-  false
-)
+        }
+
+        postData("https://api.openai.com/v1/completions", {
+          model: "text-davinci-003",
+          prompt: `Trova cinque headlines con angle diversi per il seguente prodotto da sponsorizzare tramite Facebook Ads:\n\nProdotto:${description}. Formatta il risultato in un elenco puntato.`,
+          temperature: 0.7,
+          max_tokens: 256,
+          top_p: 1.0,
+          frequency_penalty: 0.0,
+          presence_penalty: 0.0,
+        }).then((data) => {
+          console.log(data)
+          const output = cleanOutput(data.choices[0].text)
+          console.log(output)
+          session = { ...session, headlines: output }
+          chrome.storage.session.set({
+            savedStade: session,
+          })
+          setHeadlines(output)
+        })
+
+        postData("https://api.openai.com/v1/completions", {
+          model: "text-davinci-003",
+          prompt: `Trova tre body text con angle diversi per il seguente prodotto da sponsorizzare tramite Facebook Ads:\n\nProdotto:${description}. Formatta il risultato in elenco puntato.`,
+          temperature: 0.7,
+          max_tokens: 1000,
+          top_p: 1.0,
+          frequency_penalty: 0.0,
+          presence_penalty: 0.0,
+        }).then((data) => {
+          console.log(data)
+          const output = cleanOutput(data.choices[0].text)
+          console.log(output)
+          session = { ...session, bodies: output }
+          chrome.storage.session.set({
+            savedStade: session,
+          })
+          setBodies(output)
+        })
+      } else if (event.target.matches("#reset-button")) {
+        headlinesLoader.style.display = "none"
+        bodiesLoader.style.display = "none"
+        headlinesResult.style.display = "none"
+        bodiesResult.style.display = "none"
+        document.getElementById("textarea").value = ""
+        chrome.storage.session.set({
+          savedStade: {
+            productDescription: null,
+            headlines: null,
+            bodies: null,
+          },
+        })
+      } else if (event.target.matches("#submit-key-button")) {
+        const apiKey = document.getElementById("apiKey").value
+
+        chrome.storage.local
+          .set({
+            apiKey,
+          })
+          .then(() => {
+            authView.style.display = "none"
+            mainView.style.display = "block"
+            console.log("Saved API Key")
+          })
+      }
+    },
+    false
+  )
+})
 
 async function postData(url = "", data = {}) {
+  const { apiKey } = await chrome.storage.local.get("apiKey")
   const response = await fetch(url, {
     method: "POST",
     mode: "cors",
     cache: "no-cache",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer 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`,
+      Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify(data),
   })
