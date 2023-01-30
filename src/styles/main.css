@@ -1,9 +1,10 @@
 body {
   width: 350px;
+  margin: 0;
 }
 
-.wrapper {
-  padding: 0.5rem;
+.inner {
+  padding: 1rem;
 }
 
 #main,
@@ -18,9 +19,23 @@ h1 {
   color: #262626;
 }
 
+.link {
+  font-weight: bold;
+  color: rgb(18, 163, 130);
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
 .form {
   display: flex;
   flex-direction: column;
+}
+
+.authDesc {
+  font-size: 0.9rem;
 }
 
 .button {
@@ -68,6 +83,25 @@ h1 {
     0 1px 3px 1px rgba(66, 133, 244, 0.15);
 }
 
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(18, 163, 130, 0.2);
+  padding: 0.8rem;
+}
+
+.header img {
+  width: 30px;
+  height: 30px;
+}
+
+.header h1 {
+  margin: 0;
+  margin-left: 0.5rem;
+}
+
 textarea {
   border: 2px solid rgba(18, 163, 130, 0.4);
   padding: 8px;
@@ -75,6 +109,13 @@ textarea {
   display: block;
   margin-top: 5px;
   resize: vertical;
+}
+
+input {
+  border: 2px solid rgba(18, 163, 130, 0.4);
+  padding: 8px;
+  border-radius: 4px;
+  margin-bottom: 1rem;
 }
 
 .buttons p {
@@ -106,4 +147,20 @@ textarea {
 .bodies-result,
 .headlines-result {
   display: none;
+}
+
+.resultText {
+  font-size: 0.8rem;
+  line-height: 1.1rem;
+  color: #252525;
+}
+
+.logoContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.content {
+  margin-bottom: 2rem;
 }
