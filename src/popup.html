@@ -6,79 +6,88 @@
   <body>
     <div class="wrapper" id="auth">
       <div class="header">
-        <div class="logoContainer">
-        <img class="logo" src="./assets/icons/128.png"/>
-        <h1>Ads Copy Genius</h1>
-      </div>
+        <div class="logoContainer" id="logo-container">
+          <img class="logo" src="./assets/icons/128.png" />
+          <h1>Ads Copy Genius</h1>
+        </div>
       </div>
       <div class="inner">
-      <div class="content">
-        <div class="form">
-          <p for="text" class="authDesc">In order to start generating copy you need an OpenAI API Key. <br><br>Don't know how to get one? <a class="link" href="https://beta.openai.com/account/api-keys">Get yours here!</a></p>
-          <input
-            name="apiKey"
-            id="apiKey"
-            placeholder="Insert your API Key here..."
-          ></input>
-        </div>
-        <div class="buttons">
-          <button class="button primary" id="submit-key-button">Submit</button>
+        <div class="content">
+          <div class="form">
+            <p for="text" class="authDesc">
+              In order to start generating copy you need an OpenAI API Key.
+              <br /><br />Don't know how to get one?
+              <a class="link" href="https://beta.openai.com/account/api-keys"
+                >Get yours here!</a
+              >
+            </p>
+            <input
+              name="apiKey"
+              id="apiKey"
+              placeholder="Insert your API Key here..."
+            />
+          </div>
+          <div class="buttons">
+            <button class="button primary" id="submit-key-button">
+              Submit
+            </button>
+          </div>
         </div>
       </div>
-    </div>
     </div>
     <div class="wrapper" id="main">
       <div class="header">
         <div class="logoContainer">
-        <img class="logo" src="./assets/icons/128.png"/>
-        <h1>Ads Copy Genius</h1>
-      </div>
-      <button class="settingsButton" id="reset-button"><img class="settingsImage" src="./assets/icons/settings.png"/></button>
-      
+          <img class="logo" src="./assets/icons/128.png" />
+          <h1>Ads Copy Genius</h1>
+        </div>
+        <button class="settingsButton" id="settings-button">
+          <img class="settingsImage" src="./assets/icons/settings.png" />
+        </button>
       </div>
       <div class="inner">
-      <div class="content">
-        <div class="form">
-          <label class="label" for="text">Product/service description</label>
-          <textarea
-            name="text"
-            id="textarea"
-            placeholder="Insert your description here..."
-          ></textarea>
+        <div class="content">
+          <div class="form">
+            <label class="label" for="text">Product/service description</label>
+            <textarea
+              name="text"
+              id="textarea"
+              placeholder="Insert your description here..."
+            ></textarea>
+          </div>
+          <div class="buttons">
+            <button class="button" id="reset-button">Reset</button>
+            <button class="button primary" id="submit-button">Generate!</button>
+          </div>
         </div>
-        <div class="buttons">
-          <button class="button" id="reset-button">Reset</button>
-          <button class="button primary" id="submit-button">Generate!</button>
-        </div>
-      </div>
-      <div>
-        <div class="headlines-loader">
-          <h1>Generating headlines...</h1>
-          <div class="skeleton skeleton-text"></div>
-          <div class="skeleton skeleton-text"></div>
-          <div class="skeleton skeleton-text"></div>
-          <div class="skeleton skeleton-text"></div>
-        </div>
-        <div class="headlines-result">
-          <h1>Headlines</h1>
-          <p class="resultText" id="headlines"></p>
-        </div>
-        <div class="bodies-loader">
-          <h1>Generating body texts...</h1>
-          <div class="skeleton skeleton-text"></div>
-          <div class="skeleton skeleton-text"></div>
-          <div class="skeleton skeleton-text"></div>
-          <div class="skeleton skeleton-text"></div>
-          <div class="skeleton skeleton-text"></div>
-          <div class="skeleton skeleton-text"></div>
-        </div>
-        <div class="bodies-result">
-          <h1>Body Texts</h1>
-          <p  class="resultText"  id="body-texts"></p>
+        <div>
+          <div class="headlines-loader">
+            <h1>Generating headlines...</h1>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+          </div>
+          <div class="headlines-result">
+            <h1>Headlines</h1>
+            <p class="resultText" id="headlines"></p>
+          </div>
+          <div class="bodies-loader">
+            <h1>Generating body texts...</h1>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+          </div>
+          <div class="bodies-result">
+            <h1>Body Texts</h1>
+            <p class="resultText" id="body-texts"></p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
     <script type="text/javascript" src="./main.js"></script>
     <script type="text/javascript" src="./api/open-ai.js"></script>
   </body>

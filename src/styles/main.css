@@ -162,6 +162,10 @@ input {
   align-items: center;
 }
 
+.logoContainer:hover {
+  cursor: pointer;
+}
+
 .content {
   margin-bottom: 2rem;
 }
@@ -180,8 +184,5 @@ input {
   background-color: transparent;
   outline: none;
   border: none;
-}
-
-.settingsButton:hover {
   cursor: pointer;
 }
