@@ -10,6 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const bodiesResult = document.querySelector(".bodies-result")
   const headlinesLoader = document.querySelector(".headlines-loader")
   const bodiesLoader = document.querySelector(".bodies-loader")
+  const bodiesError = document.querySelector(".bodies-error")
+  const headlinesError = document.querySelector(".headlines-error")
 
   chrome.storage.local.get("apiKey").then(({ apiKey }) => {
     if (apiKey) {
@@ -60,6 +62,8 @@ document.addEventListener("DOMContentLoaded", () => {
     bodiesLoader.style.display = "block"
     headlinesResult.style.display = "none"
     bodiesResult.style.display = "none"
+    bodiesError.style.display = "none"
+    headlinesError.style.display = "none"
 
     let session = {
       productDescription: description,
@@ -67,23 +71,35 @@ document.addEventListener("DOMContentLoaded", () => {
       bodies: null,
     }
 
-    generateHeadlines(description).then((data) => {
-      const output = cleanOutput(data.choices[0].text)
-      session = { ...session, headlines: output }
-      chrome.storage.session.set({
-        savedStade: session,
+    generateHeadlines(description)
+      .then((data) => {
+        const output = cleanOutput(data.choices[0].text)
+        session = { ...session, headlines: output }
+        chrome.storage.session.set({
+          savedStade: session,
+        })
+        setHeadlines(output)
       })
-      setHeadlines(output)
-    })
+      .catch((error) => {
+        headlinesLoader.style.display = "none"
+        headlinesError.style.display = "block"
+        console.log(error)
+      })
 
-    generateBodies(description).then((data) => {
-      const output = cleanOutput(data.choices[0].text)
-      session = { ...session, bodies: output }
-      chrome.storage.session.set({
-        savedStade: session,
+    generateBodies(description)
+      .then((data) => {
+        const output = cleanOutput(data.choices[0].text)
+        session = { ...session, bodies: output }
+        chrome.storage.session.set({
+          savedStade: session,
+        })
+        setBodies(output)
       })
-      setBodies(output)
-    })
+      .catch((error) => {
+        bodiesLoader.style.display = "none"
+        bodiesError.style.display = "block"
+        console.log(error)
+      })
   })
 
   resetButton.addEventListener("click", () => {

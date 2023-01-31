@@ -146,8 +146,15 @@ input {
 .headlines-loader,
 .bodies-loader,
 .bodies-result,
-.headlines-result {
+.headlines-result,
+.headlines-error,
+.bodies-error {
   display: none;
+}
+
+.headlines-error,
+.bodies-error {
+  color: rgb(163, 18, 30);
 }
 
 .resultText {
