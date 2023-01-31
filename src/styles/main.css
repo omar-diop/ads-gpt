@@ -193,3 +193,10 @@ input {
   border: none;
   cursor: pointer;
 }
+
+.footer {
+  text-align: center;
+  background-color: #d3d3d3;
+  padding: 1rem;
+  color: #707070;
+}
