@@ -16,15 +16,13 @@ document.addEventListener("DOMContentLoaded", () => {
       mainView.style.display = "block"
 
       chrome.storage.session.get("savedStade").then(({ savedStade }) => {
-        const { productDescription, headlines, bodies } = savedStade
+        if (savedStade) {
+          const { productDescription, headlines, bodies } = savedStade
 
-        console.log("Description: " + productDescription)
-        console.log("Headlines: " + headlines)
-        console.log("Bodies: " + bodies)
-
-        setDescription(productDescription)
-        setHeadlines(headlines)
-        setBodies(bodies)
+          setDescription(productDescription)
+          setHeadlines(headlines)
+          setBodies(bodies)
+        }
       })
     } else {
       authView.style.display = "block"
@@ -32,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   })
 
-  //Button Clicks
+  //Buttons Events
 
   logoButton.addEventListener("click", () => {
     chrome.storage.local.get("apiKey").then(({ apiKey }) => {
@@ -51,18 +49,17 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     })
 
-    console.log("show auth")
     authView.style.display = "block"
     mainView.style.display = "none"
   })
 
   submitButton.addEventListener("click", () => {
+    const description = document.getElementById("textarea").value
+
     headlinesLoader.style.display = "block"
     bodiesLoader.style.display = "block"
     headlinesResult.style.display = "none"
     bodiesResult.style.display = "none"
-
-    const description = document.getElementById("textarea").value
 
     let session = {
       productDescription: description,
@@ -70,18 +67,8 @@ document.addEventListener("DOMContentLoaded", () => {
       bodies: null,
     }
 
-    postData("https://api.openai.com/v1/completions", {
-      model: "text-davinci-003",
-      prompt: `Trova cinque headlines con angle diversi per il seguente prodotto da sponsorizzare tramite Facebook Ads:\n\nProdotto:${description}. Formatta il risultato in un elenco puntato.`,
-      temperature: 0.7,
-      max_tokens: 256,
-      top_p: 1.0,
-      frequency_penalty: 0.0,
-      presence_penalty: 0.0,
-    }).then((data) => {
-      console.log(data)
+    generateHeadlines(description).then((data) => {
       const output = cleanOutput(data.choices[0].text)
-      console.log(output)
       session = { ...session, headlines: output }
       chrome.storage.session.set({
         savedStade: session,
@@ -89,18 +76,8 @@ document.addEventListener("DOMContentLoaded", () => {
       setHeadlines(output)
     })
 
-    postData("https://api.openai.com/v1/completions", {
-      model: "text-davinci-003",
-      prompt: `Trova tre body text con angle diversi per il seguente prodotto da sponsorizzare tramite Facebook Ads:\n\nProdotto:${description}. Formatta il risultato in elenco puntato.`,
-      temperature: 0.7,
-      max_tokens: 1000,
-      top_p: 1.0,
-      frequency_penalty: 0.0,
-      presence_penalty: 0.0,
-    }).then((data) => {
-      console.log(data)
+    generateBodies(description).then((data) => {
       const output = cleanOutput(data.choices[0].text)
-      console.log(output)
       session = { ...session, bodies: output }
       chrome.storage.session.set({
         savedStade: session,
@@ -138,21 +115,6 @@ document.addEventListener("DOMContentLoaded", () => {
       })
   })
 })
-
-async function postData(url = "", data = {}) {
-  const { apiKey } = await chrome.storage.local.get("apiKey")
-  const response = await fetch(url, {
-    method: "POST",
-    mode: "cors",
-    cache: "no-cache",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify(data),
-  })
-  return response.json()
-}
 
 function setDescription(description) {
   if (!description) return
