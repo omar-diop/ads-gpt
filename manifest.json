@@ -2,7 +2,7 @@
   "name": "Ads Copy Genius",
   "author": "Omar Diop",
   "description": "Elevate your advertising game.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "manifest_version": 3,
   "background.service_worker": {
     "scripts": ["background.js"],
