@@ -19,9 +19,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       chrome.storage.session.get("savedStade").then(({ savedStade }) => {
         if (savedStade) {
-          const { productDescription, headlines, bodies } = savedStade
+          const { productDescription, headlines, bodies, language } = savedStade
 
           setDescription(productDescription)
+          setLanguage(language)
           setHeadlines(headlines)
           setBodies(bodies)
         }
@@ -57,6 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   submitButton.addEventListener("click", () => {
     const description = document.getElementById("textarea").value
+    const language = document.getElementById("language").value
 
     headlinesLoader.style.display = "block"
     bodiesLoader.style.display = "block"
@@ -69,9 +71,10 @@ document.addEventListener("DOMContentLoaded", () => {
       productDescription: description,
       headlines: null,
       bodies: null,
+      language: language,
     }
 
-    generateHeadlines(description)
+    generateHeadlines(description, language)
       .then((data) => {
         const output = cleanOutput(data.choices[0].text)
         session = { ...session, headlines: output }
@@ -86,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log(error)
       })
 
-    generateBodies(description)
+    generateBodies(description, language)
       .then((data) => {
         const output = cleanOutput(data.choices[0].text)
         session = { ...session, bodies: output }
@@ -113,6 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
         productDescription: null,
         headlines: null,
         bodies: null,
+        language: "en",
       },
     })
   })
@@ -131,6 +135,11 @@ document.addEventListener("DOMContentLoaded", () => {
       })
   })
 })
+
+function setLanguage(language) {
+  if (!language) return
+  document.getElementById("language").value = language
+}
 
 function setDescription(description) {
   if (!description) return
