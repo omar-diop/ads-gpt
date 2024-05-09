@@ -3,7 +3,7 @@
   "author": "Omar Diop",
   "description": "__MSG_appDesc__",
   "default_locale": "en",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "manifest_version": 3,
   "background.service_worker": {
     "scripts": ["background.js"],

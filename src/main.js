@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     generateHeadlines(description, language)
       .then((data) => {
-        const output = cleanOutput(data.choices[0].text)
+        const output = cleanOutput(data.choices[0].message.content)
         session = { ...session, headlines: output }
         chrome.storage.session.set({
           savedStade: session,
@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     generateBodies(description, language)
       .then((data) => {
-        const output = cleanOutput(data.choices[0].text)
+        const output = cleanOutput(data.choices[0].message.content)
         session = { ...session, bodies: output }
         chrome.storage.session.set({
           savedStade: session,
